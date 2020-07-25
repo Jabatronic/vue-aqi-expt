@@ -3,19 +3,19 @@
     <h1>Get WAQI Data (Test)</h1>
     <h2>{{ city }}</h2>
     <h2>{{ aqi }}</h2>
-    <div
-      v-for="(value, name, index) in iaqi"
-      :key="index"
-    >
-      {{ name }}: {{ value.v }}
-    </div>
     <button @click="fetchUsers">Fetch Data!</button>
+    <GenCircles :iaqiData="iaqi"/>
   </div>
 </template>
 
 <script>
+import GenCircles from '@/components/GenCircles.vue'
+
 export default {
-  name: 'app',
+  name: 'WAQI_Test',
+  components: {
+    GenCircles
+  },
   data () {
     return {
       city: '',
