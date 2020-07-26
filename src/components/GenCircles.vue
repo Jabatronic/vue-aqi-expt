@@ -2,7 +2,7 @@
   <div>
     <!-- Content -->
     <div
-      v-for="(value, name, index) in big5filter(iaqiData)"
+      v-for="(value, name, index) in (iaqiData)"
       :key="index"
     >
       {{ name }}: {{ value.v }}
@@ -45,6 +45,18 @@ const aqBoundaries = {
     moderate: [354, 443, 532],
     high: [710, 887, 1064],
     v_high: [1065]
+  },
+  pm25: {
+    low: [11, 23, 35],
+    moderate: [41, 47, 53],
+    high: [58, 64, 70],
+    v_high: [71]
+  },
+  pm10: {
+    low: [11, 23, 35],
+    moderate: [41, 47, 53],
+    high: [58, 64, 70],
+    v_high: [71]
   }
 }
 
@@ -65,6 +77,7 @@ export default {
   },
   methods: {
     big5filter (iaqiData) {
+      console.log(iaqiData)
       const big5keys = Object.keys(aqBoundaries)
       const big5obj = {}
       for (const data in iaqiData) {

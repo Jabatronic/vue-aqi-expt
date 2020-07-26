@@ -27,7 +27,7 @@ export default {
     fetchUsers: function () {
       const apiUrl = 'https://api.waqi.info/feed'
       const authToken = '19c6276b13bc059b2f5811c5037638346d286d15'
-      const station = 'Bournemouth'
+      const station = 'Beijing'
 
       const apiRequest = `${apiUrl}/${station}/?token=${authToken}`
 
