@@ -2,23 +2,23 @@
   <div>
     <!-- Content -->
     <div
-      v-for="(value, name, index) in iaqiData"
+      v-for="(value, name, index) in big5filter(iaqiData)"
       :key="index"
     >
       {{ name }}: {{ value.v }}
     </div>
     <svg viewBox="-50 -50 100 100">
       <circle
-        v-for="(value, name, index) in iaqiData"
+        v-for="(value, name, index) in big5filter(iaqiData)"
         :key="index"
         :fill="getColour(name, value.v)"
         stroke="white"
         stroke-width=".1"
         cx="0" cy="0"
-        :r="(50 - index * 10)"
+        :r="50 - (index * 10)"
       >
+      {{ name }}
       </circle>
-
     </svg>
   </div>
 </template>
@@ -64,10 +64,22 @@ export default {
     iaqiData: Object
   },
   methods: {
+    big5filter (iaqiData) {
+      const big5keys = Object.keys(aqBoundaries)
+      const big5obj = {}
+      for (const data in iaqiData) {
+        big5keys.forEach((k, i) => {
+          if (k === data) {
+            big5obj[k] = iaqiData[k]
+          }
+        })
+      }
+      return big5obj
+    },
     getColour (name, value) {
-      if (name === 'o3') {
-        for (const boundary in aqBoundaries.o3) {
-          const boundaryIndex = aqBoundaries.o3[boundary]
+      if (name in aqBoundaries) {
+        for (const boundary in aqBoundaries[name]) {
+          const boundaryIndex = aqBoundaries[name][boundary]
           const boundaryMax = Math.max(...boundaryIndex)
           if (value <= boundaryMax) {
             return boundaryColors[boundary]

@@ -21,7 +21,6 @@ export default {
       city: '',
       aqi: '',
       iaqi: null
-
     }
   },
   methods: {
@@ -37,9 +36,6 @@ export default {
           this.city = result.data.data.city.name
           this.aqi = result.data.data.aqi
           this.iaqi = result.data.data.iaqi
-          console.log(typeof result.data.data.iaqi)
-          console.log(this.iaqi)
-          console.log(result.data.data)
         }).catch((err) => {
           console.warn('there was a problem!: ' + err.response.log)
         })
