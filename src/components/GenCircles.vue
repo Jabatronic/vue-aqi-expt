@@ -7,19 +7,31 @@
     >
       {{ name }}: {{ value.v }}
     </div>
-    <svg viewBox="-50 -50 100 100">
-      <circle
+    <div class="svg-wrapper">
+      <svg
+        viewBox="-60 -50 150 100"
         v-for="(value, name, index) in big5filter(iaqiData)"
-        :key="index"
-        :fill="getColour(name, value.v)"
-        stroke="white"
-        stroke-width=".1"
-        cx="0" cy="0"
-        :r="50 - (index * 10)"
+        :key="'key_' + index"
       >
-      {{ name }}
-      </circle>
-    </svg>
+      <g :id="'key_' + index">
+        <circle
+          :fill="getColour(name, value.v)"
+          stroke="white"
+          stroke-width=".1"
+          cx="0" cy="0"
+          r="50"
+        >
+        </circle>
+        <text
+          fill="white"
+          font-size="90%"
+          text-anchor="middle"
+          alignment-baseline="central"
+          >{{ name }}</text>
+      </g>
+
+      </svg>
+    </div>
   </div>
 </template>
 
@@ -53,10 +65,10 @@ const aqBoundaries = {
     v_high: [71]
   },
   pm10: {
-    low: [11, 23, 35],
-    moderate: [41, 47, 53],
-    high: [58, 64, 70],
-    v_high: [71]
+    low: [16, 33, 50],
+    moderate: [58, 66, 75],
+    high: [83, 91, 100],
+    v_high: [101]
   }
 }
 
@@ -96,6 +108,8 @@ export default {
           const boundaryMax = Math.max(...boundaryIndex)
           if (value <= boundaryMax) {
             return boundaryColors[boundary]
+          } else if (value >= aqBoundaries[name].v_high) {
+            return boundaryColors.v_high
           }
         }
       } else {
@@ -121,5 +135,14 @@ li {
 }
 a {
   color: #42b983;
+}
+
+.svg-wrapper {
+  display: flex;
+
+  & svg {
+    flex: 1;
+    padding: 20px
+  }
 }
 </style>
