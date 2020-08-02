@@ -84,3 +84,19 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+input {
+  font-size: 32px;
+  border: 1px solid #33CE00;
+  border-radius: 10px;
+  text-align: center;
+
+  &:focus {
+    border: 3px solid #33CE00;
+    border-radius: 10px;
+    outline-offset: 0px !important;
+    outline: none !important;
+  }
+}
+</style>
