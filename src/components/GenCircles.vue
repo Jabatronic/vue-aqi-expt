@@ -1,35 +1,31 @@
 <template>
   <div>
     <!-- Content -->
-    <div
-      v-for="(value, name, index) in (iaqiData)"
-      :key="index"
-    >
+    <div v-for="(value, name, index) in (iaqiData)" :key="index">
       <!-- {{ name }}: {{ value.v }} -->
     </div>
     <div class="svg-wrapper">
       <svg
-        viewBox="-60 -50 150 100"
+        viewBox="-75 -75 150 150"
         v-for="(value, name, index) in big5filter(iaqiData)"
         :key="'key_' + index"
       >
-      <g :id="'key_' + index">
-        <circle
-          :fill="getColour(name, value.v)"
-          stroke="white"
-          stroke-width=".1"
-          cx="0" cy="0"
-          r="50"
-        >
-        </circle>
-        <text
-          fill="white"
-          font-size="90%"
-          text-anchor="middle"
-          alignment-baseline="central"
+        <g :id="'key_' + index">
+          <circle
+            :fill="getColour(name, value.v)"
+            stroke="white"
+            stroke-width=".1"
+            cx="0"
+            cy="0"
+            r="50"
+          />
+          <text
+            fill="white"
+            font-size="90%"
+            text-anchor="middle"
+            alignment-baseline="central"
           >{{ name }}</text>
-      </g>
-
+        </g>
       </svg>
     </div>
   </div>
@@ -137,16 +133,13 @@ a {
 }
 
 .svg-wrapper {
-  width: 90vw;
-  display: flex;
+  width: 100vw;
   flex-direction: row;
-  justify-content: space-evenly;
-  align-content: center;
+  justify-content: space-between;
 
   & svg {
-    // flex: 1;
     width: 300px;
-    // padding: 20px
+    margin: 20px;
   }
 }
 </style>
