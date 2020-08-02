@@ -89,7 +89,6 @@ export default {
   },
   methods: {
     big5filter (iaqiData) {
-      console.log(iaqiData)
       const big5keys = Object.keys(aqBoundaries)
       const big5obj = {}
       for (const data in iaqiData) {
@@ -138,11 +137,16 @@ a {
 }
 
 .svg-wrapper {
+  width: 90vw;
   display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-content: center;
 
   & svg {
-    flex: 1;
-    padding: 20px
+    // flex: 1;
+    width: 300px;
+    // padding: 20px
   }
 }
 </style>

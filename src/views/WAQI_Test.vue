@@ -1,13 +1,18 @@
 <template>
   <div class="about">
     <h1>Get WAQI Data (Test)</h1>
-    <input type="text" v-model="locationSearchInput" v-on:keyup.enter="submitSearch" />
+    <input type="text" v-model="locationSearchInput" v-on:keyup="searchForStation" />
+    <div
+      v-for="(data, index) in stationSearchResult"
+      :key="index"
+    >
+      <div @click="fetchData(data.uid)">{{ data.station.name }}</div>
+    </div>
     <div v-if="isSearchSubmitted" class="message">
       <h2 v-if="warning">{{ warning }}</h2>
       <h2>{{ city }}</h2>
       <h2>{{ aqi }}</h2>
     </div>
-    <!-- <button @click="fetchUsers">Fetch Data!</button> -->
     <GenCircles :iaqiData="iaqi"/>
   </div>
 </template>
@@ -24,6 +29,7 @@ export default {
     return {
       city: '',
       locationSearchInput: '',
+      stationSearchResult: {},
       isSearchSubmitted: false,
       aqi: '',
       iaqi: null,
@@ -33,14 +39,18 @@ export default {
   methods: {
     submitSearch: function () {
       this.isSearchSubmitted = true
-      this.fetchData()
+      // this.fetchData()
+      this.searchForStation()
     },
-    fetchData: function () {
+    fetchData: function (uid) {
+      this.isSearchSubmitted = true
+      this.stationSearchResult = {}
+      this.locationSearchInput = ''
       const apiUrl = 'https://api.waqi.info/feed'
       const authToken = '19c6276b13bc059b2f5811c5037638346d286d15'
-      const station = this.locationSearchInput
+      const station = uid
 
-      const apiRequest = `${apiUrl}/${station}/?token=${authToken}`
+      const apiRequest = `${apiUrl}/@${station}/?token=${authToken}`
 
       this.$http.get(apiRequest)
         .then((result) => {
@@ -53,7 +63,24 @@ export default {
           this.city = ''
           this.iaqi = null
           this.warning = 'there was a problem'
-          console.warn('there was a problem!: ' + err.response.log)
+          console.warn('there was a problem!: ' + err.response)
+        })
+    },
+    searchForStation: function () {
+      if (this.locationSearchInput === '') {
+        this.stationSearchResult = ''
+      }
+      const apiUrl = 'https://api.waqi.info/search'
+      const authToken = '19c6276b13bc059b2f5811c5037638346d286d15'
+      const keyWord = this.locationSearchInput
+
+      const apiRequest = `${apiUrl}/?keyword=${keyWord}&token=${authToken}`
+
+      this.$http.get(apiRequest)
+        .then((result) => {
+          this.stationSearchResult = result.data.data
+        }).catch((err) => {
+          console.warn(err.response)
         })
     }
   }
