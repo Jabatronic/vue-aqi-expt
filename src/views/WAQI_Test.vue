@@ -19,6 +19,7 @@
 
 <script>
 import GenCircles from '@/components/GenCircles.vue'
+const authToken = '19c6276b13bc059b2f5811c5037638346d286d15'
 
 export default {
   name: 'WAQI_Test',
@@ -39,7 +40,6 @@ export default {
   methods: {
     submitSearch: function () {
       this.isSearchSubmitted = true
-      // this.fetchData()
       this.searchForStation()
     },
     fetchData: function (uid) {
@@ -47,7 +47,6 @@ export default {
       this.stationSearchResult = {}
       this.locationSearchInput = ''
       const apiUrl = 'https://api.waqi.info/feed'
-      const authToken = '19c6276b13bc059b2f5811c5037638346d286d15'
       const station = uid
 
       const apiRequest = `${apiUrl}/@${station}/?token=${authToken}`
@@ -71,7 +70,6 @@ export default {
         this.stationSearchResult = ''
       }
       const apiUrl = 'https://api.waqi.info/search'
-      const authToken = '19c6276b13bc059b2f5811c5037638346d286d15'
       const keyWord = this.locationSearchInput
 
       const apiRequest = `${apiUrl}/?keyword=${keyWord}&token=${authToken}`

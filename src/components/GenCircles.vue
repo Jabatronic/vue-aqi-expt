@@ -5,7 +5,7 @@
       v-for="(value, name, index) in (iaqiData)"
       :key="index"
     >
-      {{ name }}: {{ value.v }}
+      <!-- {{ name }}: {{ value.v }} -->
     </div>
     <div class="svg-wrapper">
       <svg
