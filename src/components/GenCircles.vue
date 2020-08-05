@@ -24,7 +24,18 @@
             font-size="90%"
             text-anchor="middle"
             alignment-baseline="central"
-          >{{ name }}</text>
+          >
+            <tspan class="polutant-name">{{ name }}</tspan>
+          </text>
+          <text
+            fill="white"
+            font-size="90%"
+            text-anchor="middle"
+            alignment-baseline="central"
+          >
+            <tspan dy="20" class="polutant-name">{ {{ value.v }} }</tspan>
+          </text>
+
         </g>
       </svg>
     </div>
@@ -72,10 +83,10 @@ const aqBoundaries = {
  * Define colours for each boundary
  */
 const boundaryColors = {
-  low: '#33CE00',
-  moderate: '#FF9A00',
-  high: '#990002',
-  v_high: '#CF31FF'
+  low: ['#73BE75', '#32FF00', '#33CE00'],
+  moderate: ['#FEFF00', '#FFCF02', '#FF9A00'],
+  high: ['#FF6463', '#FF0202', '#990002'],
+  v_high: ['#CF31FF']
 }
 
 export default {
@@ -98,14 +109,21 @@ export default {
     },
     getColour (name, value) {
       if (name in aqBoundaries) {
+        let counter = 0
         for (const boundary in aqBoundaries[name]) {
           const boundaryIndex = aqBoundaries[name][boundary]
           const boundaryMax = Math.max(...boundaryIndex)
           if (value <= boundaryMax) {
-            return boundaryColors[boundary]
+            // const position = boundaryIndex.indexOf(value)
+            // console.log(position)
+            // console.log(value)
+            // console.log(boundaryIndex)
+            // console.log('> ' + boundaryColors[boundary][counter])
+            return boundaryColors[boundary][counter]
           } else if (value >= aqBoundaries[name].v_high) {
             return boundaryColors.v_high
           }
+          counter++
         }
       } else {
         return false
