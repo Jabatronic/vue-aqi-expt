@@ -2,7 +2,6 @@
   <div>
     <!-- Content -->
     <div v-for="(value, name, index) in (iaqiData)" :key="index">
-      <!-- {{ name }}: {{ value.v }} -->
     </div>
     <div class="svg-wrapper">
       <svg
@@ -18,6 +17,8 @@
             cx="0"
             cy="0"
             r="50"
+            ref="circle"
+            class="circle"
           />
           <text
             fill="#2c3e50"
@@ -35,7 +36,6 @@
           >
             <tspan dy="20" class="polutant-name">{ {{ value.v }} }</tspan>
           </text>
-
         </g>
       </svg>
     </div>
@@ -45,10 +45,48 @@
 <script>
 import { aqBoundaries, colors } from '@/modules/constants'
 
+import { gsap } from 'gsap'
+import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin'
+import { MorphSVGPlugin } from 'gsap/MorphSVGPlugin'
+
+gsap.registerPlugin(DrawSVGPlugin, MorphSVGPlugin)
+
 export default {
   name: 'GenCircles',
   props: {
     iaqiData: Object
+  },
+  data () {
+    return {
+      // ...
+      circleRef: null
+    }
+  },
+  mounted () {
+    // ...
+  },
+  updated: function () {
+    var ref = this
+    this.$nextTick(function () {
+      if (typeof ref.$refs.circle !== 'undefined') {
+        ref.circleRef = ref.$refs.circle
+        this.animateCircle()
+        console.log('init')
+      }
+    })
+  },
+  watch: {
+    // ...
+    iaqiData: function () {
+      var self = this
+      this.$nextTick(function () {
+        if (typeof self.$refs.circle !== 'undefined') {
+          self.circleRef = self.$refs.circle
+          this.animateCircle()
+          console.log('init')
+        }
+      })
+    }
   },
   methods: {
     big5filter (iaqiData) {
@@ -64,9 +102,7 @@ export default {
       return big5obj
     },
     getColour (pollutantName, value) {
-      // console.log(aqBoundaries)
       if (pollutantName in aqBoundaries) {
-        // console.log(aqBoundaries[pollutantName])
         for (const pollutantRank in aqBoundaries[pollutantName]) {
           const subRank = aqBoundaries[pollutantName][pollutantRank]
           if (value >= subRank.min && value <= subRank.max) {
@@ -74,6 +110,11 @@ export default {
           }
         }
       }
+    },
+    animateCircle () {
+      const tl = gsap.timeline()
+      tl.set(this.circleRef, { transformOrigin: '50% 50%', rotate: '90deg', drawSVG: 0 })
+      tl.to(this.circleRef, { duration: 1, drawSVG: '100%' })
     }
   }
 }
