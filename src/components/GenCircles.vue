@@ -44,6 +44,7 @@
 
 <script>
 import { aqBoundaries, colors } from '@/modules/constants'
+import genSounds from '@/modules/genSounds'
 
 import { gsap } from 'gsap'
 import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin'
@@ -102,6 +103,8 @@ export default {
       return big5obj
     },
     getColour (pollutantName, value) {
+      // test genSounds
+      genSounds('C4')
       if (pollutantName in aqBoundaries) {
         for (const pollutantRank in aqBoundaries[pollutantName]) {
           const subRank = aqBoundaries[pollutantName][pollutantRank]
