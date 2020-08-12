@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { aqBoundaries, colors } from '@/modules/constants'
+import { aqBoundaries, colors, notes } from '@/modules/constants'
 import genSounds from '@/modules/genSounds'
 
 import { gsap } from 'gsap'
@@ -60,7 +60,8 @@ export default {
   data () {
     return {
       // ...
-      circleRef: null
+      circleRef: null,
+      chord: []
     }
   },
   mounted () {
@@ -84,7 +85,6 @@ export default {
         if (typeof self.$refs.circle !== 'undefined') {
           self.circleRef = self.$refs.circle
           this.animateCircle()
-          console.log('init')
         }
       })
     }
@@ -103,12 +103,11 @@ export default {
       return big5obj
     },
     getColour (pollutantName, value) {
-      // test genSounds
-      genSounds('C4')
       if (pollutantName in aqBoundaries) {
         for (const pollutantRank in aqBoundaries[pollutantName]) {
           const subRank = aqBoundaries[pollutantName][pollutantRank]
           if (value >= subRank.min && value <= subRank.max) {
+            genSounds(notes[pollutantRank])
             return colors[pollutantRank]
           }
         }

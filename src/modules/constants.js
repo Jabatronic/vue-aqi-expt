@@ -227,4 +227,17 @@ const colors = {
   10: '#CF31FF'
 }
 
-export { aqBoundaries, colors }
+const notes = {
+  1: 'C4',
+  2: 'E4',
+  3: 'G4',
+  4: 'Bb4',
+  5: 'D4',
+  6: 'C5',
+  7: 'E5',
+  8: 'G5',
+  9: 'Bb5',
+  10: 'D5'
+}
+
+export { aqBoundaries, colors, notes }
