@@ -13,18 +13,21 @@
       <h2>{{ city }}</h2>
       <h2>{{ aqi }}</h2>
     </div>
-    <GenCircles :iaqiData="iaqi"/>
+    <GenCircles :iaqiData="iaqi" />
+    <GenSounds v-if="aqi" :aqiRank="aqi" />
   </div>
 </template>
 
 <script>
 import GenCircles from '@/components/GenCircles.vue'
+import GenSounds from '@/components/GenSounds.vue'
 const authToken = '19c6276b13bc059b2f5811c5037638346d286d15'
 
 export default {
   name: 'WAQI_Test',
   components: {
-    GenCircles
+    GenCircles,
+    GenSounds
   },
   data () {
     return {
@@ -32,7 +35,7 @@ export default {
       locationSearchInput: '',
       stationSearchResult: {},
       isSearchSubmitted: false,
-      aqi: '',
+      aqi: null,
       iaqi: null,
       warning: ''
     }

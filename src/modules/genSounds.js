@@ -1,3 +1,5 @@
+// import Vue from 'vue'
+// import store from '@/store'
 import { Synth, Sequence, Transport } from 'tone'
 
 const genSounds = () => {

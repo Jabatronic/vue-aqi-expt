@@ -43,8 +43,7 @@
 </template>
 
 <script>
-import { aqBoundaries, colors, notes } from '@/modules/constants'
-import genSounds from '@/modules/genSounds'
+import { aqBoundaries, colors } from '@/modules/constants'
 
 import { gsap } from 'gsap'
 import { DrawSVGPlugin } from 'gsap/DrawSVGPlugin'
@@ -60,8 +59,7 @@ export default {
   data () {
     return {
       // ...
-      circleRef: null,
-      chord: []
+      circleRef: null
     }
   },
   mounted () {
@@ -107,7 +105,6 @@ export default {
         for (const pollutantRank in aqBoundaries[pollutantName]) {
           const subRank = aqBoundaries[pollutantName][pollutantRank]
           if (value >= subRank.min && value <= subRank.max) {
-            genSounds(notes[pollutantRank])
             return colors[pollutantRank]
           }
         }
