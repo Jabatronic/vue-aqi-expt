@@ -1,8 +1,17 @@
 <template>
   <div class="about">
+    <!-- The video -->
+    <video muted loop id="videoBackground" class="video-bg" ref="video">
+      <source src="../assets/video/clouds_01.mp4" type="video/mp4">
+    </video>
+    <div class="video-bg-overlay">
+    </div>
+    <div class="main">
+      <div class="main-inner">
     <h1>Get WAQI Data (Test)</h1>
     <input type="text" v-model="locationSearchInput" v-on:keyup="searchForStation" />
     <div
+      class="message"
       v-for="(data, index) in stationSearchResult"
       :key="index"
     >
@@ -15,6 +24,9 @@
     </div>
     <GenCircles :iaqiData="iaqi" />
     <GenSounds v-if="aqi" :aqiRank="aqi" />
+    </div>
+      </div>
+
   </div>
 </template>
 
@@ -38,6 +50,11 @@ export default {
       aqi: null,
       iaqi: null,
       warning: ''
+    }
+  },
+  watch: {
+    aqi () {
+      this.$refs.video.play()
     }
   },
   methods: {
@@ -91,7 +108,7 @@ export default {
 <style lang="scss" scoped>
 input {
   font-size: 32px;
-  border: 1px solid #33CE00;
+  border: 1px solid #fff;
   border-radius: 10px;
   text-align: center;
 
@@ -101,5 +118,48 @@ input {
     outline-offset: 0px !important;
     outline: none !important;
   }
+}
+
+.message {
+  color: #fff;
+}
+
+.video-bg {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  z-index: 0;
+}
+
+.video-bg-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
+  z-index: 10;
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.9));
+
+  opacity: .6;
+}
+
+.main {
+  position: fixed;
+  top: 0;
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+    & .main-inner {
+      // ..
+      & h1 {
+        color: rgba(255, 255, 255, 0.673);
+      }
+    }
 }
 </style>

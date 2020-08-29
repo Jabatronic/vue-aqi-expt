@@ -13,7 +13,7 @@ export default {
   },
   data () {
     return {
-      notesToBePlayed: ['C4']
+      notesToBePlayed: []
     }
   },
   created () {
